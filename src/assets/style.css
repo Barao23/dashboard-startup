@@ -1,0 +1,36 @@
+
+.teste{
+    background-color: rgb(14, 48, 48);
+    background-color: rgba(232, 250, 245, 0.5);
+    background-color: rgba(0, 0, 0, 0.2)
+}
+
+
+/*Definindo o estilo do scroll do To Do List */
+#lista-ToDo::-webkit-scrollbar {
+    width: 6px;
+}
+
+#lista-ToDo::-webkit-scrollbar-thumb {
+    background-color: #BFBFBF;
+    border-radius: 4px;
+}
+
+#lista-ToDo::-webkit-scrollbar-track {
+    background-color: #E8E8E8;
+    border-radius: 4px;
+}
+
+
+
+/*Definindo o estilo do scroll das páginas */
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #ccc;
+}
+

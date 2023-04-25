@@ -440,7 +440,7 @@ def fat_desp(df, df_despesas, ano, mes, filtro = 'mes'):
     fig.update_yaxes(title="Volume (R$)", showgrid=True, gridcolor='lightgray', title_font=dict(size=18, family = 'Poppins, sans-serif'))
     fig.update_layout(template ='plotly_white', 
                     title={
-                        'text': "Receita x Despesas",
+                        'text': "Receita x Gastos",
                         'font': {'size': 24, 'family': 'Poppins, sans-serif'},
                         'x': 0.5,
                         'y': 0.9
@@ -665,7 +665,7 @@ card_despesas = dbc.Card(id = 'card-despesas-style', children=[
             ),
             dbc.CardImgOverlay(
                 dbc.CardBody([
-                    html.H4("Despesas", style = {'color': 'white', 'fontWeight': 'bold'}),
+                    html.H4("Gastos", style = {'color': 'white', 'fontWeight': 'bold'}),
                     html.Div([
                         html.P(id = 'despesas', children = [],
                            style={'color': 'white', 'font-size': '22px', 'width': '100%', 'margin': '0'}), # Despesas
@@ -1394,7 +1394,7 @@ def bar_pie_graph(ano):
         template='plotly_white', # Estilo templete
 
         title={
-            'text': 'Faturamento, despesas e resultado',
+            'text': 'Faturamento, gastos e resultado',
             'font': {'size': 24, 'family': 'Poppins, sans-serif'}
         },
        
@@ -1418,7 +1418,7 @@ def bar_pie_graph(ano):
         # Editando o gráfico 
         fig_pie.update_layout(        
             title={
-                'text': 'Despesas',
+                'text': 'Tipos de gastos',
                 'font': {'size': 22, 'family': 'Poppins, sans-serif'},
             },
 

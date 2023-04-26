@@ -1637,8 +1637,12 @@ def enviar_email(_, data, ultimo_envio, atraso, tamanho_passado):
             ultimo_envio = dt.today()
             tamanho_passado = atraso
             enviar_alerta('Atividade atrasada',
-               f'Você possui {atraso} em atraso. '
-               f'Por favor, verifique as suas tarefas no Dashboard Financeiro',
+               f'Este é um lembrete amigável de que você possui {atraso} tarefas em atraso no StartChart. '
+               f'Por favor, verifique as tarefas pendentes e conclua-as assim que possível. '
+               f'\nLembre-se de que as tarefas em atraso podem afetar o desempenho geral da empresa.'
+               f'\n'
+               f'\nCordialmente,'
+               f'\nStartChart',
                'reiskayron@gmail.com') 
             
         return dash.no_update, ultimo_envio, tamanho_passado 

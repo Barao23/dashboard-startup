@@ -34,17 +34,6 @@ pages = [
 ]
 
 
-
-# Vamos importar a logo
-#with open('C:/Users/KayronIdarilioRibeir/OneDrive - STARTPAY/Documentos/Projeto/2023.04.23/src/logo.png', 'rb') as f:
-#'C:/Users/KayronIdarilioRibeir/OneDrive - STARTPAY/Documentos/2023.04.02/logo.png', 'rb') as f:
-#C:/Users/kayro/OneDrive/Documentos/Projeto - TCC2/2023.03.31/logo.png', 'rb') as f:
-#'C:/Users/KayronIdarilioRibeir/OneDrive - STARTPAY/Documentos/25.03.2023/logo.png', 'rb') as f:
-#C:/Users/kayro/Projeto/pages/logo.png
-    #logo = base64.b64encode(f.read()).decode()
-#html.Img(src='data:image/png;base64,{}'.format(logo), 
-#                         style={'height':'60px'})
-
 # Definindo as paginas de navegação
 navbar = dbc.NavbarSimple([
 

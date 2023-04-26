@@ -164,7 +164,7 @@ layout = html.Div([
     
     # Div para receber a tabela dos dados que foram carregados
   
-    html.Div(id='output-data-upload-despesas', style={'background-color': 'white'}),
+    html.Div(id='output-data-upload-despesas', style={'background-color': '#EBECF0'}),
 
     
 
@@ -226,10 +226,7 @@ layout = html.Div([
 
     # Ativa uma vez por dia ou quando a página é recarregada
     dcc.Interval(id= 'mongoDB', interval = 86400000, n_intervals = 0),
-
-    html.Div(id='espaço-despesas', children=[]),
-    html.Div(id='espaço2', children=[])
-], 
+], style={'height': 'auto', 'margin': '0 '} 
 ),
 
 def apagar_Mango(n):

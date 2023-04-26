@@ -369,7 +369,7 @@ def mapa(df, ano, mes, filtro = 'mes'):
                 mapbox_style = "open-street-map", # Estilo do mapa "open-street-map" - "carto-positron"
                 center={"lat":-14, "lon": -55},
                 zoom=2.5,
-                color_continuous_scale=px.colors.sequential.RdBu, # Estilo da cor
+                color_continuous_scale=px.colors.sequential.RdBu_r, # Estilo da cor
                 # Inverti para que as cores quentes representassem o maior valor transacionado (R$).
                 opacity=0.8,
                 )
@@ -479,7 +479,8 @@ def pie_chart_mapa(df, ano, mes, filtro = 'mes'):
                       marker_colors=px.colors.sequential.RdBu, #Inverti para que as cores quentes representassem o maior valor transacionado (R$).
                       hole=0.4,
                       showlegend=True,
-                      textinfo='label+percent'),
+                      textinfo='label+percent',
+                      hovertemplate='Produto %{label}: %{percent:.1%} <br>Quantidade: %{value}'),
                        
               row=1, col=1
         )
@@ -958,7 +959,7 @@ layout = html.Div(
                 'margin-top':'30px', 'margin-left':'30px', 'margin-right':'10px'})
         
 
-    ], style={'display':'flex', 'justify-content': 'center'}
+    ], style={'display':'flex', 'justify-content': 'center', 'margin-bottom': '50px'}
     ),
 
     dcc.Interval(
@@ -1248,7 +1249,7 @@ def func_coorte(ano):
             z=churn.T.values,  # Dados da tabela pivoteada
             #x=churn.T.columns.tolist(),  # Nomes das colunas
             #y=churn.T.index.tolist(),  # Nomes das linhas
-            colorscale='RdBu',  # Esquema de cores
+            colorscale='RdBu_r',  # Esquema de cores
             showlegend = False,
             showscale=True,
             hovertemplate = 'Atividade: %{z:.2%}<br>Data: %{y}',
@@ -1405,14 +1406,13 @@ def bar_pie_graph(ano):
     fig_bar.update_yaxes(showgrid=True, gridcolor='lightgray', title_font=dict(size=16, family = 'Poppins, sans-serif'))
 
     fig_pie = px.pie()
-
-    print(len(df_despesas))
+    
     if len(df_despesas) > 0:
 
         # Criando o gráfico de despesas por departamento 
         fig_pie = px.sunburst(df_despesas, path=['Departamento', 'Tipo de despesa'], 
-                            color_continuous_scale='RdBu', values='Valor (R$)', 
-                            color='Valor (R$)',
+                            color_continuous_scale='RdBu_r', values='Valor (R$)', 
+                            color='Valor (R$)'
                     )
     
         # Editando o gráfico 
@@ -1431,7 +1431,7 @@ def bar_pie_graph(ano):
                     family='Poppins, sans-serif',
                     size=10,
                 ),
-            ),
+            )
             
         )
 

@@ -20,10 +20,19 @@ database = local['dashboard_startup']
 # Criando um grupo de documentos no MongoDB
 doc_venda = database.baseVendas
 
+
+# Importação das fontes
+external_stylesheets = ['https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;0,700;1,400&display=swap']
+# Estilo da fonte que será utilizada
+fonte = {'fontFamily': 'Poppins, sans-serif'}
+
+
+
 pages = [
     page for page in dash.page_registry.values()
     if page["module"] != "pages.not_found_404"
 ]
+
 
 
 # Vamos importar a logo
@@ -38,6 +47,7 @@ pages = [
 
 # Definindo as paginas de navegação
 navbar = dbc.NavbarSimple([
+
     html.Div([
         dbc.NavItem()
     ], style={'width':'100%'}),
@@ -52,7 +62,7 @@ navbar = dbc.NavbarSimple([
         style = {'margin': '0.8rem'}
     ),
 ],
-    brand="Dashboard Financeiro",
+    brand = html.A(html.Img(src='/assets/logo-startchart.svg', style={'margin-left':'50px', 'height': '80px', 'width': '100px', 'transform': 'scale(2.0)'})),
     color='primary',
     dark=True,
     sticky='top',
@@ -64,11 +74,67 @@ navbar = dbc.NavbarSimple([
 app.layout = html.Div([
     dbc.Container([
         navbar, 
+
         dcc.Location(id="url", refresh= False),
+
         dash.page_container, 
-    ], style={'background-color': '#EBECF0', 'height': 'auto', 'margin': '0', 'padding':'0', 'z-index': '-9999'},
+
+    ], style={'background-color': '#EBECF0', 'height': '100%', 'margin': '0', 'padding':'0', 'z-index': '-9999', 'margin-bottom': '50px'},
     fluid=True),
-])
+
+        html.Footer([
+            # Imagens
+            html.Div([
+    
+                # Meu logo
+                html.A(html.Img(src='/assets/logo-startchart.svg', 
+                                style={'margin-left':'80px', 'height': '80px', 'width': '100px', 'transform': 'scale(2.0)',
+                                       'margin-top':'15px'})
+                ),
+                
+                html.Div([
+                    # Link Github
+                    html.A(href = 'https://github.com/Barao23/dashboard-startup.git', className="bi bi-github",
+                        style={'color': 'white', 'transform': 'scale(2.5)', 'margin-right': '50px'}
+                    ),
+                    
+                    # Link Linkedin
+                    html.A(href = 'https://www.linkedin.com/in/kayron-reis-558b29170/', className="bi bi-linkedin",
+                        style={'color': 'white', 'transform': 'scale(2.5)', 'margin-left': '50px'}
+                    ),
+                ], style={'margin-top':'65px', 'height':'auto', 'display':'flex'}),
+    
+                
+                # Logo UNIFESP
+                html.A(html.Img(src='/assets/logo.png', 
+                                style={'height': '60px', 'width': '100px', 'transform': 'scale(1.2)',
+                                       'margin-top':'30px', 'margin-right':'50px'})
+                ),
+
+            ], style = {'display':'flex', 'justify-content':'space-between'}
+            ),
+            # Agradecimentos
+            html.Div([
+                html.P("Gostaria de expressar minha sincera gratidão a todos que me" 
+                       " apoiaram durante essa jornada. Não teria chegado aqui sem o amor,"
+                       " o encorajamento e o apoio de minha família, amigos e mentores. Obrigado!",
+                    style={'width': '40%', 'text-align': 'center', 'margin-top':'10px',
+                           'fontFamily': fonte, 'color':'#DDDDDD', 'font-weight':'bold'}
+                ),
+
+            ], style = {'display':'flex', 'justify-content':'center', 'margin-bottom':'15px'}
+            ),
+
+            html.Hr(style={'margin':'0'}),
+
+            html.P("© 2023 - Kayron Reis 122051", 
+                   style={'fontFamily': fonte, 'margin-top':'15px',
+                          'display':'flex', 'justify-content':'center'}),
+
+        ], style={'background-color': '#31485A', 'height': '17rem', 'margin': '0', 'padding':'0', 'z-index': '-9999'}
+        )
+
+], style = {'background-color': '#EBECF0', 'height': 'auto', 'margin': '0 '})
 
 
 

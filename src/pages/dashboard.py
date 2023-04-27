@@ -68,48 +68,50 @@ def enviar_alerta(assunto, texto, destino):
 
 
 
+global df
+global df_despesa
 
 # Função para carregar os dados de despesa e vendas a partir do MongoDB
-def carregar_dados():
-    # Conectando com o servidor local
-    local_vendas = MongoClient('mongodb+srv://tcc_122051:tnPQdZLXfyi3hMMw@tcc-122051.sy9tzlz.mongodb.net/test')
+#def carregar_dados():
+# Conectando com o servidor local
+local_vendas = MongoClient('mongodb+srv://tcc_122051:tnPQdZLXfyi3hMMw@tcc-122051.sy9tzlz.mongodb.net/test')
 
-    # Acessando o banco de dados de vendas
-    database_vendas = local_vendas['dashboardstartup']
+# Acessando o banco de dados de vendas
+database_vendas = local_vendas['dashboardstartup']
 
-    # Acessando a coleção de vendas
-    colecao_vendas = database_vendas['baseVendas']
+# Acessando a coleção de vendas
+colecao_vendas = database_vendas['baseVendas']
 
-    # Acessando a coleção de Despesas
-    colecao_despesas = database_vendas['baseDespesas']
+# Acessando a coleção de Despesas
+colecao_despesas = database_vendas['baseDespesas']
 
-    # Consultando a coleção e convertendo em DataFrame
-    df = pd.DataFrame(list(colecao_vendas.find()))
-    # Consultando a coleção e convertendo em DataFrame
-    df_despesa = pd.DataFrame(list(colecao_despesas.find()))
-    
-    # Tratamento df
-    df = df.dropna(how='all') #apagando as linhas vazias
-    utila_linha_vazia = df.index[df.applymap(lambda x: x != '').all(axis=1)][-1]# Obtém o índice das últimas linhas não vazias
-    df = df.drop(index=df.index[utila_linha_vazia+1:])# Remove as linhas vazias após a última linha não vazia
-    df['Data da Venda'] = pd.to_datetime(df['Data da Venda'].astype(str), format='%Y-%m-%d') # Atribui o formato data para a coluna Data da Venda
-    df['Quantidade'] = pd.to_numeric(df['Quantidade'], downcast ='signed') #Convertendo a coluna quantidade para inteiro
-    df['Valor (R$)'] = pd.to_numeric(df['Valor (R$)'], downcast ='signed')
+# Consultando a coleção e convertendo em DataFrame
+df = pd.DataFrame(list(colecao_vendas.find()))
+# Consultando a coleção e convertendo em DataFrame
+df_despesa = pd.DataFrame(list(colecao_despesas.find()))
 
-    # Tratamento df
-    df_despesa = df_despesa.dropna(how='all') #apagando as linhas vazias
-    utila_linha_vazia = df_despesa.index[df_despesa.applymap(lambda x: x != '').all(axis=1)][-1]# Obtém o índice das últimas linhas não vazias
-    df_despesa = df_despesa.drop(index=df_despesa.index[utila_linha_vazia+1:])# Remove as linhas vazias após a última linha não vazia
-    df_despesa['Data Pagamento'] = pd.to_datetime(df_despesa['Data Pagamento'].astype(str), format='%Y-%m-%d') # Atribui o formato data para a coluna Data Pagamento
-    df_despesa['Data Vencimento'] = pd.to_datetime(df_despesa['Data Vencimento'].astype(str), format='%Y-%m-%d') # Atribui o formato data para a coluna Data Vencimento
-    df_despesa['Valor (R$)'] = pd.to_numeric(df_despesa['Valor (R$)'], downcast ='signed')
+# Tratamento df
+df = df.dropna(how='all') #apagando as linhas vazias
+utila_linha_vazia = df.index[df.applymap(lambda x: x != '').all(axis=1)][-1]# Obtém o índice das últimas linhas não vazias
+df = df.drop(index=df.index[utila_linha_vazia+1:])# Remove as linhas vazias após a última linha não vazia
+df['Data da Venda'] = pd.to_datetime(df['Data da Venda'].astype(str), format='%Y-%m-%d') # Atribui o formato data para a coluna Data da Venda
+df['Quantidade'] = pd.to_numeric(df['Quantidade'], downcast ='signed') #Convertendo a coluna quantidade para inteiro
+df['Valor (R$)'] = pd.to_numeric(df['Valor (R$)'], downcast ='signed')
 
-    return df, df_despesa
+# Tratamento df
+df_despesa = df_despesa.dropna(how='all') #apagando as linhas vazias
+utila_linha_vazia = df_despesa.index[df_despesa.applymap(lambda x: x != '').all(axis=1)][-1]# Obtém o índice das últimas linhas não vazias
+df_despesa = df_despesa.drop(index=df_despesa.index[utila_linha_vazia+1:])# Remove as linhas vazias após a última linha não vazia
+df_despesa['Data Pagamento'] = pd.to_datetime(df_despesa['Data Pagamento'].astype(str), format='%Y-%m-%d') # Atribui o formato data para a coluna Data Pagamento
+df_despesa['Data Vencimento'] = pd.to_datetime(df_despesa['Data Vencimento'].astype(str), format='%Y-%m-%d') # Atribui o formato data para a coluna Data Vencimento
+df_despesa['Valor (R$)'] = pd.to_numeric(df_despesa['Valor (R$)'], downcast ='signed')
+
+    #return df, df_despesa
 
 
 # função para formatar os ANOS como opções de DropdownMenu
 def gerar_opcoes_ano():
-    df, df_despesa = carregar_dados()
+    #df, df_despesa = carregar_dados()
 
     # Obtendo lista de anos do dataframe vendas
     ano_vendas = sorted(df['Data da Venda'].dt.year.unique())
@@ -126,7 +128,7 @@ def gerar_opcoes_ano():
 # função para formatar os MESES como opções de DropdownMenu
 def gerar_opcoes_mes(ano):
 
-    df, df_despesa = carregar_dados() # Obtendo os dados da tabela
+    #df, df_despesa = carregar_dados() # Obtendo os dados da tabela
     
     # Obtendo lista de meses do dataframe vendas
     meses_vendas = sorted(df[df['Data da Venda'].dt.year == ano]['Data da Venda'].dt.month.unique())
@@ -750,6 +752,10 @@ layout = html.Div(
     dcc.Store(id='atraso', storage_type='local'),
     # Armazena o tamanho das tasks
     dcc.Store(id='tamanho_task', storage_type='local'),
+    # Armazena o mes full
+    dcc.Store(id='mes-full'),
+    # Armazena o ano aux
+    dcc.Store(id='ano-aux'),
 
     # Estrutura que rebece o botão de dúvida e Slider
     html.Div(
@@ -1035,7 +1041,7 @@ def pop_up(n1, n2, estado):
 
 def carregar_output(intervalo, ano, mes, mes_aux, n_ano, n_mes, n_mes_total, ano_selecionado, mes_selecionado):
 
-    df, df_despesa = carregar_dados() #Chamando a função que carrega os dados a partir do MongoDB
+    #df, df_despesa = carregar_dados() #Chamando a função que carrega os dados a partir do MongoDB
     
     # Obtendo o ano e o mês selecionado
     # Obtenha o id do ano selecionado no filtro-ano
@@ -1167,28 +1173,34 @@ def atualizar_opcoes_mes(n, ids):
 @callback(
     Output("filtro-ano", 'label'),
     Output("filtro-mes", 'label'),
+    Output("mes-full", 'data'),
+    Output("ano-aux", 'data'),
     Input('store_ano', 'data'),
     Input('store_mes', 'data'),
-    Input('store_mes-aux', 'data'),
-    Input({'type': 'mes-dropdown', 'index': ALL}, 'n_clicks'),
-    Input({'type': 'mes-dropdown-total', 'index': ALL}, 'n_clicks'),
-    prevent_initial_call=True
+    State("mes-full", 'data'),
+    State("ano-aux", 'data'),
+    State({'type': 'mes-dropdown', 'index': ALL}, 'n_clicks'),
+    State({'type': 'mes-dropdown-total', 'index': ALL}, 'n_clicks'),
+    
 )
-def atualizar_dropdown_label(ano, mes, mes_aux, pos_mes, pos_mes_aux):
+def atualizar_dropdown_label(ano, mes, mes_full, ano_aux, pos_mes, pos_mes_aux):
+    
+    if not mes_full:
+        mes_full = 0
+        ano_aux = ano
+
+    if ano_aux != ano:
+        anos_aux = ano
+        mes_full = 0
+ 
+    if pos_mes_aux[0] is not None and int(pos_mes_aux[0]) > mes_full:
+        mes_full = pos_mes_aux[0]
+        mes = 'all'
 
     ano = 'Ano: '+str(ano)
     mes = 'Mês: '+str(mes)
 
-    # Obtenha o id do ano selecionado no filtro-ano
-    triggered_id = dash.callback_context.triggered[0]['prop_id'].split('.')[0]
-    
-    # Decodifica o objeto retornando o index. 
-    input_id = json.loads(triggered_id)
-    
-    if (input_id['index']) > mes_aux:
-        mes = 'Mês: full'
-
-    return ano, mes
+    return ano, mes, mes_full, ano_aux
 
 # Callback para verificar a atividade dos clientes
 @callback(
@@ -1199,7 +1211,7 @@ def atualizar_dropdown_label(ano, mes, mes_aux, pos_mes, pos_mes_aux):
 # Análise coorte
 def func_coorte(ano):
     # Obtendo o DataFrame
-    df, _ = carregar_dados() # Obtendo os dados da tabela
+    #df, _ = carregar_dados() # Obtendo os dados da tabela
     # Selecionando os dados de acordo com o ano
     selecao = df[(df['Data da Venda'].dt.year == ano)]
     # Criando uma coluna nova contendo apenas o mês e o ano analisado.
@@ -1332,17 +1344,17 @@ def func_coorte(ano):
 # Função para gráfico de barras e pie
 def bar_pie_graph(ano):
     # Obtendo os Data Frames
-    df_vendas, df_despesas = carregar_dados() # Obtendo os dados da tabela
+    #df_vendas, df_despesas = carregar_dados() # Obtendo os dados da tabela
 
     # Tratando Data Frame das vendas 
     # Selecionando os dados de acordo com o ano
-    df_vendas = df_vendas[(df_vendas['Data da Venda'].dt.year == ano)]
+    df_vendas = df[(df['Data da Venda'].dt.year == ano)]
     # Criando uma coluna nova contendo apenas o mês e o ano analisado.
     df_vendas['Data'] = df_vendas['Data da Venda'].apply(lambda x: x.strftime('%Y-%m'))
     
     # Tratando Data Frame das despesas 
     # Selecionando os dados de acordo com o ano
-    df_despesas = df_despesas[(df_despesas['Data Pagamento'].dt.year == ano)]
+    df_despesas = df_despesa[(df_despesa['Data Pagamento'].dt.year == ano)]
     # Criando uma coluna nova contendo apenas o mês e o ano analisado.
     df_despesas['Data'] = df_despesas['Data Pagamento'].apply(lambda x: x.strftime('%Y-%m'))
    

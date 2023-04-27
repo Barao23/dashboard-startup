@@ -83,7 +83,7 @@ app.layout = html.Div([
                 
                 html.Div([
                     # Link Github
-                    html.A(href = 'https://github.com/Barao23/dashboard-startup.git', className="bi bi-github",
+                    html.A(href = 'https://github.com/Barao23/StartChart.git', className="bi bi-github",
                         style={'color': 'white', 'transform': 'scale(2.5)', 'margin-right': '50px'}
                     ),
                     
